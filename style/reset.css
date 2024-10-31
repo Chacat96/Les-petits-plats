@@ -1,0 +1,73 @@
+/* Suppression des marges et des paddings par défaut */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Suppression des styles de typographie par défaut */
+body, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+dl, dd, ol, ul,
+figure, hr,
+fieldset, legend {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    font-weight: normal;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    font-weight: normal;
+    font-family: "Anton", sans-serif;
+}
+
+/* Liste sans puces ni indentation */
+ul, ol {
+    list-style: none;
+}
+
+/* Suppression de la décoration des liens */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Suppression des bordures sur les images, et définition des éléments multimédia en tant que blocs */
+img, video, canvas, audio {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
+
+/* Désactiver l'apparence spécifique des boutons dans les navigateurs */
+button {
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Suppression des bordures de focus sur les formulaires, sauf en cas d'accessibilité */
+button:focus, input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+
+/* Suppression de l'espacement par défaut pour les citations et les balises de citation */
+blockquote, q {
+    quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+    content: none;
+}
+
+/* Tailles par défaut pour les tableaux */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
