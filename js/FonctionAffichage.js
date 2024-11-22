@@ -35,6 +35,49 @@ export function filter(ingredient, ustensils, appliance, recipe) {
 });
 }
 
+export function displayFilters(data) {
+    const ingredientList = document.querySelector('.filter-ingredient .filter-list');
+    const applianceList = document.querySelector('.filter-appareils .filter-list');
+    const ustensilList = document.querySelector('.filter-ustensiles .filter-list');
+
+    // Collecte des données en supprimant les doublons avec set
+    const ingredients = new Set();
+    const appliances = new Set();
+    const ustensils = new Set();
+
+    data.forEach(recipe => {
+        // Ajout des ingrédients
+        recipe.ingredients.forEach(ing => ingredients.add(ing.ingredient.toLowerCase()));
+
+        // Ajout des appareils
+        appliances.add(recipe.appliance.toLowerCase());
+
+        // Ajout des ustensiles
+        recipe.ustensils.forEach(ust => ustensils.add(ust.toLowerCase()));
+    });
+
+    // Fonction pour afficher les items dans une liste
+    const appendToList = (list, items) => {
+        list.innerHTML = ''; 
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = capitalizeFirstLetter(item); 
+            li.classList.add('filter-item');
+            list.appendChild(li);
+        });
+    };
+
+    // Afficher les données dans chaque liste
+    appendToList(ingredientList, [...ingredients]);
+    appendToList(applianceList, [...appliances]);
+    appendToList(ustensilList, [...ustensils]);
+}
+//Ajouter une majuscule à la première lettre
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+
 //Fonction pour afficher les cartes de recettes
 export function displayRecipes(recipes) {
     const container = document.getElementById('recipes-container');
