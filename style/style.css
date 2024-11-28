@@ -106,10 +106,11 @@ main {
 }
 
 .search {
-    width: 100%;
+    display: flex;
+    width: 80%;
     padding: 8px;
-    border: none;
-    border-bottom: 1px solid #ddd;
+    margin: 10px 20px;
+    border: 1px solid #ccc;
 }
 
 .filter-list {
@@ -131,6 +132,40 @@ main {
 
 .filter.active .filter-content {
     display: block;
+    margin-top: -25px;
+    margin-left: 20px;
+}
+
+/* span des éléments selectionnées */
+.selected-filters {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    width: 85%;
+    margin: auto;
+}
+.selected-span {
+    background-color: #FFD15B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+}
+
+.selected-span .close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.selected-span .close-btn:hover {
+    color: #555;
 }
 
 /******************************CARTE DE RECETTE*****************/

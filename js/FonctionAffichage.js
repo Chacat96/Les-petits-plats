@@ -115,4 +115,69 @@ export function displayRecipes(recipes) {
     });
 }
 
+export function filterSelect(data) {
+    const filterContainer = document.querySelector('.selected-filters'); // Conteneur pour les `span`
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-item')) {
+            // Récupérer le texte de l'élément cliqué
+            const filterText = e.target.textContent.toLowerCase();
+
+            // Vérifie si le `span` existe déjà
+            const existingSpan = filterContainer.querySelector(`.selected-span[data-value="${filterText}"]`);
+            if (!existingSpan) {
+                addSelectedSpan(filterText, filterContainer, data); // Passer `data` ici
+            }
+
+            // Recalcul des recettes
+            updateRecipesBasedOnFilters(data, filterContainer);
+        }
+    });
+}
+
+// Fonction pour ajouter un span
+function addSelectedSpan(text, container, data) {
+    const span = document.createElement('span');
+    span.classList.add('selected-span');
+    span.setAttribute('data-value', text);
+    span.textContent = capitalizeFirstLetter(text);
+
+    // Bouton pour supprimer le `span`
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'x';
+    closeBtn.classList.add('close-btn');
+    span.appendChild(closeBtn);
+
+    container.appendChild(span);
+
+    // Événement pour retirer le `span` et mettre à jour les recettes
+    closeBtn.addEventListener('click', () => {
+        span.remove();
+        updateRecipesBasedOnFilters(data, container); // Mettre à jour les recettes après suppression
+    });
+}
+
+// Fonction pour recalculer les recettes
+function updateRecipesBasedOnFilters(data, container) {
+    // Récupérer tous les filtres actifs
+    const activeFilters = Array.from(container.querySelectorAll('.selected-span'))
+        .map(span => span.getAttribute('data-value'));
+
+    // Filtrer les recettes en fonction des filtres actifs
+    const filteredRecipes = data.filter(recipe => {
+        return activeFilters.every(filterText => {
+            const ingredientMatch = recipe.ingredients.some(ing => ing.ingredient.toLowerCase() === filterText);
+            const applianceMatch = recipe.appliance.toLowerCase() === filterText;
+            const ustensilMatch = recipe.ustensils.some(ust => ust.toLowerCase() === filterText);
+            return ingredientMatch || applianceMatch || ustensilMatch;
+        });
+    });
+
+    // Afficher les recettes filtrées
+    displayRecipes(filteredRecipes);
+}
+
+
+
+
 //Faire une fonction pour les evenement que j'appel dans main ou faire un autre fichier uniquement pour les fonction devenement

@@ -1,5 +1,5 @@
 import { getData } from "./js/service.js";
-import { displayRecipes, filter, displayFilters} from "./js/FonctionAffichage.js"
+import { displayRecipes, filter, displayFilters, filterSelect } from "./js/FonctionAffichage.js"
 import { searchLetter } from "./js/fonction.js";
 
 
@@ -8,9 +8,12 @@ async function main() {
     try {
         const data = await getData();
         displayRecipes(data);
-        filter();
-        displayFilters(data);
         searchLetter();
+        filterSelect(data);
+        filter(); 
+        displayFilters(data);
+       
+        
     } catch (error) {
         console.error('Erreur de chargement des recettes', error); 
     }
