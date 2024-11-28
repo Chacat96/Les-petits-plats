@@ -113,6 +113,8 @@ export function displayRecipes(recipes) {
 
         container.appendChild(recipeElement);
     });
+
+    updateRecipeCount();
 }
 
 export function filterSelect(data) {
@@ -153,7 +155,7 @@ function addSelectedSpan(text, container, data) {
     // Événement pour retirer le `span` et mettre à jour les recettes
     closeBtn.addEventListener('click', () => {
         span.remove();
-        updateRecipesBasedOnFilters(data, container); // Mettre à jour les recettes après suppression
+        updateRecipesBasedOnFilters(data, container); 
     });
 }
 
@@ -176,6 +178,19 @@ function updateRecipesBasedOnFilters(data, container) {
     // Afficher les recettes filtrées
     displayRecipes(filteredRecipes);
 }
+
+//Afficher le nombre de recette disponible
+export function updateRecipeCount() {
+    const recipeCards = document.querySelectorAll('.recipe-card');
+    const visibleRecipes = Array.from(recipeCards).filter(card => card.style.display !== 'none');
+    const count = visibleRecipes.length;
+
+    const recipeCountElement = document.querySelector('.nomber-recipe');
+    recipeCountElement.textContent = count > 0
+        ? `${count} recette${count > 1 ? 's' : ''}`
+        : 'Aucune recette disponible.';
+}
+
 
 
 
