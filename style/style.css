@@ -247,3 +247,10 @@ main {
 .quantite-container {
     display: flex;
 }
+
+/**********************NO RECIPE MESSAGE******************/
+#no-results-message {
+    text-align: center;
+    font-size: 20px;
+    margin: 50px;
+}
