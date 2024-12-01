@@ -1,19 +1,16 @@
 import { getData } from "./js/service.js";
-import { displayRecipes, filter, displayFilters, filterSelect } from "./js/FonctionAffichage.js"
-import { searchLetter } from "./js/fonction.js";
+import { displayRecipes, filter, displayFilters,setupFilterSearch, filterSelect, searchLetter } from "./js/Fonction.js";
 
 
 async function main() {
-    // Récupère les données JSON
     try {
         const data = await getData();
         displayRecipes(data);
-        searchLetter();
+        searchLetter(data, document.querySelector('.selected-filters'));
         filterSelect(data);
         filter(); 
-        displayFilters(data);
-       
-        
+        setupFilterSearch();
+        displayFilters(data);     
     } catch (error) {
         console.error('Erreur de chargement des recettes', error); 
     }
