@@ -70,8 +70,21 @@ main {
 /****************FILTRE DE RECHERCHE************************/
 .filter-container {
     display: flex;
-    justify-content: space-around;
+    gap: 40px;
     align-items: center;
+    width: 70%;
+}
+
+.filter-recipe-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 6rem;
+}
+
+.nomber-recipe {
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 /* Conteneur principal du menu déroulant */
@@ -142,7 +155,8 @@ main {
     /* justify-content: space-around; */
     align-items: center;
     width: 85%;
-    margin: auto;
+    margin-left: 2.3rem;
+    gap: 40px;
 }
 .selected-span {
     background-color: #FFD15B;
@@ -174,14 +188,15 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    margin: 20px;
 }
 
 .recipe-card {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 25%;
     background-color: white;
-    margin-top: 20px;
+    margin: 10px;
     border-radius: 10px;
 }
 
@@ -253,4 +268,38 @@ main {
     text-align: center;
     font-size: 20px;
     margin: 70px;
+}
+
+
+/**************************RESPONSIVE**************************/
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        width: 100%;
+    }
+
+    .filter-recipe-container {
+         margin: 0; 
+    }
+
+    .filter-container {
+        flex-direction: column;
+    }
+
+    #recipes-container {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .recipe-card {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 920px) and (min-width: 768px) {
+    .filter-recipe-container {
+        flex-wrap: wrap;
+        margin: 2rem;
+    }
 }
