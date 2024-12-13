@@ -155,7 +155,7 @@ main {
     /* justify-content: space-around; */
     align-items: center;
     width: 85%;
-    margin-left: 2.3rem;
+    margin: auto;
     gap: 40px;
 }
 .selected-span {
