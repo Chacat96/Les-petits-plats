@@ -1,6 +1,5 @@
 import { getData } from "./js/service.js";
-import { displayRecipes, filter, displayFilters,setupFilterSearch, filterSelect, searchLetter } from "./js/Fonction.js";
-
+import { displayRecipes, filter, displayFilters,setupFilterSearch, filterSelect, searchLetter } from "./js/fonction.js";
 
 async function main() {
     try {
@@ -10,7 +9,7 @@ async function main() {
         filterSelect(data);
         filter(); 
         setupFilterSearch();
-        displayFilters(data);     
+        displayFilters(data);    
     } catch (error) {
         console.error('Erreur de chargement des recettes', error); 
     }

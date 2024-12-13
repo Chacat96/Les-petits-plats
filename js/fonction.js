@@ -133,10 +133,13 @@ export function filterSelect(data) {
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('filter-item')) {
             const filterText = e.target.textContent.toLowerCase();
+           const sanitizer = sanitizeInput(filterText);
             const existingSpan = filterContainer.querySelector(`.selected-span[data-value="${filterText}"]`);
             
             if (!existingSpan) {
-                addSelectedSpan(filterText, filterContainer, data);
+                addSelectedSpan(filterText, filterContainer, data, sanitizer);
+                console.log(filterContainer);
+
             }
 
             updateRecipesBasedOnFilters(data, filterContainer);
@@ -194,8 +197,14 @@ export function searchLetter(data, container) {
     const searchBar = document.getElementById('search-bar');
     const recipesContainer = document.getElementById('recipes-container');
 
+    searchBar.addEventListener('input', (e) => {
+    const rawInput = e.target.value; // Texte brut saisi par l'utilisateur
+    const sanitized = sanitizeInput(rawInput); // Nettoyage du texte
+    console.log(`Entrée brute : "${rawInput}" → Nettoyée : "${sanitized}"`);
+});
+
     searchBar.addEventListener('keyup', (e) => {
-        const searchLetter = e.target.value.toLowerCase().trim();
+        const searchLetter = sanitizeInput (e.target.value.toLowerCase().trim());
 
         // Lancer la recherche uniquement à partir de 3 lettres
         if (searchLetter.length < 3) {
@@ -206,10 +215,39 @@ export function searchLetter(data, container) {
         }
 
         filterState.searchText = searchLetter;
-        updateRecipesBasedOnFilters(data, container);
+
+        // Filtrage avec boucles natives
+        const filteredRecipes = [];
+        for (let i = 0; i < data.length; i++) {
+            const recipe = data[i];
+
+            let matchesSearchText = false;
+
+            // Vérifier si le nom ou la description contient le texte recherché
+            if (
+                recipe.name.toLowerCase().includes(searchLetter) ||
+                recipe.description.toLowerCase().includes(searchLetter)
+            ) {
+                matchesSearchText = true;
+            }
+
+            // Vérifier si un des ingrédients contient le texte recherché
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchLetter)) {
+                    matchesSearchText = true;
+                    break; // Arrêter la boucle si une correspondance est trouvée
+                }
+            }
+
+            if (matchesSearchText) {
+                filteredRecipes.push(recipe);
+            }
+        }
+
+        // Afficher les recettes filtrées
+        displayRecipes(filteredRecipes);
 
         // Mettre à jour les listes des filtres en fonction des résultats
-        const filteredRecipes = getFilteredRecipes(data);
         updateFilterLists(filteredRecipes);
 
         // Gestion du message "aucun résultat"
@@ -227,6 +265,13 @@ export function searchLetter(data, container) {
             message.remove();
         }
     });
+}
+
+// Fonction pour neutraliser les caractères spéciaux
+export function sanitizeInput(input) {
+    const tempDiv = document.createElement('div');
+    tempDiv.textContent = input; // Cette méthode textContent neutralise les caractères spéciaux
+    return tempDiv.innerHTML; // Retourne le contenu sécurisé
 }
 
 
