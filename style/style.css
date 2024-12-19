@@ -285,6 +285,7 @@ main {
 
     .filter-container {
         flex-direction: column;
+        gap: 0;
     }
 
     #recipes-container {
