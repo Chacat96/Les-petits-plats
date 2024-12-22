@@ -5,16 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
-    <link rel="icon" href="asset/recette/Recette15.jpg">
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/solid.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&family=Shrikhand&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&family=Shrikhand&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Shrikhand&display=swap" rel="stylesheet">
 </head>
@@ -35,53 +32,56 @@
     <main>
 
         <section class="filter-recipe-container">
+           <div class="filter-recipe-container-text">
 
-            <div class="filter-container">
-                <div class="filter filter-ingredient">
-                    <button class="filter-button">
-                        <span>Ingrédients</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="filter-content">
-                        <input type="text" class="search" placeholder="Rechercher un ingrédient">
-                        <ul class="filter-list"></ul>
-                    </div>
-                </div>
+               <div class="filter-container">
+                   <div class="filter filter-ingredient">
+                       <button class="filter-button">
+                           <span>Ingrédients</span>
+                           <i class="fa-solid fa-chevron-down"></i>
+                       </button>
+                       <div class="filter-content">
+                           <input type="text" class="search" placeholder="Rechercher un ingrédient">
+                           <ul class="filter-list"></ul>
+                       </div>
+                   </div>
+    
+                   <div class="filter filter-appareils">
+                       <button class="filter-button">
+                           <span>Appareils</span>
+                           <i class="fa-solid fa-chevron-down"></i>
+                       </button>
+                       <div class="filter-content">
+                           <input type="text" class="search" placeholder="Rechercher un appareil">
+                           <ul class="filter-list"></ul>
+                       </div>
+                   </div>
+    
+                   <div class="filter filter-ustensiles">
+                       <button class="filter-button">
+                           <span>Ustensiles</span>
+                           <i class="fa-solid fa-chevron-down"></i>
+                       </button>
+                       <div class="filter-content">
+                           <input type="text" class="search" placeholder="Rechercher un  ">
+                           <ul class="filter-list"></ul>
+                       </div>
+                   </div>
+               </div>
+    
+               <p class="nomber-recipe">recettes</p>
+           </div>
 
-                <div class="filter filter-appareils">
-                    <button class="filter-button">
-                        <span>Appareils</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="filter-content">
-                        <input type="text" class="search" placeholder="Rechercher un appareil">
-                        <ul class="filter-list"></ul>
-                    </div>
-                </div>
-
-                <div class="filter filter-ustensiles">
-                    <button class="filter-button">
-                        <span>Ustensiles</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="filter-content">
-                        <input type="text" class="search" placeholder="Rechercher un  ">
-                        <ul class="filter-list"></ul>
-                    </div>
-                </div>
-            </div>
-
-            <p class="nomber-recipe">recettes</p>
-
+            
+            <!-- Section pour afficher les spans sélectionnés -->
+            <div class="selected-filters"></div>
         </section>
 
-        <!-- Section pour afficher les spans sélectionnés -->
-        <div class="selected-filters"></div>
 
         <template id="recipes-template">
             <div class="recipe-card">
                 <div class="img-recipe">
-                    <img src="" alt="Image de la recette" class="recipe-image" data-image />
+                    <img src="" alt="Image de la recette" class="recipe-image" loading="lazy" data-image />
                     <span class="time" data-time></span>
                 </div>
                 <div class="recipe-card-text" id="recipe-template">

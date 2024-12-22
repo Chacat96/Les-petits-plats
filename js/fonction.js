@@ -138,7 +138,6 @@ export function filterSelect(data) {
             
             if (!existingSpan) {
                 addSelectedSpan(filterText, filterContainer, data, sanitizer);
-                console.log(filterContainer);
 
             }
 
