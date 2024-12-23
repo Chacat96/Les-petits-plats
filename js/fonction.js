@@ -1,8 +1,8 @@
 const imagePath = "asset/recette";
 
-function getImagePath(imageName) {
-    return `${imagePath}/${imageName}`;
-}
+// function getImagePath(imageName) {
+//     return `${imagePath}/${imageName}`;
+// }
 
 // Fonction pour les majuscules
 function capitalizeFirstLetter(text) {
@@ -101,9 +101,30 @@ export function displayRecipes(recipes) {
 
     recipes.forEach(recipe => {
         const recipeElement = template.content.cloneNode(true);
+
+        const imgContainer = recipeElement.querySelector('.img-recipe');
+        
+        // Remplacer l'img simple par un picture
+        const currentImg = imgContainer.querySelector('[data-image]');
+        const picture = document.createElement('picture');
+        
+        // Construire les chemins d'images
+        const webpPath = `${imagePath}/${recipe.image.replace('.jpg', '.webp')}`;
+        
+        // Créer la structure picture
+        picture.innerHTML = `
+            <source srcset="${webpPath}" type="image/webp">
+            <img src="${webpPath}" 
+                 alt="Image de la recette ${recipe.name}" 
+                 class="recipe-image"
+                 loading="lazy">
+        `;
+        
+        // Remplacer l'ancienne image par picture
+        currentImg.replaceWith(picture);
         
         // Remplir les données de la recette
-        recipeElement.querySelector('[data-image]').src = getImagePath(recipe.image);
+        
         recipeElement.querySelector('[data-time]').textContent = `${recipe.time} min`;
         recipeElement.querySelector('[data-title]').textContent = recipe.name;
         recipeElement.querySelector('[data-description]').textContent = recipe.description;
