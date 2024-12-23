@@ -217,8 +217,13 @@ export function searchLetter(data, container) {
     const searchBar = document.getElementById('search-bar');
     const recipesContainer = document.getElementById('recipes-container');
 
+    searchBar.addEventListener('input', (e) => {
+    const rawInput = e.target.value; // Texte brut saisi par l'utilisateur
+    const sanitized = sanitizeInput(rawInput); // Nettoyage du texte
+});
+
     searchBar.addEventListener('keyup', (e) => {
-        const searchLetter = sanitizeInput(e.target.value.toLowerCase().trim());
+        const searchLetter = sanitizeInput (e.target.value.toLowerCase().trim());
 
         // Lancer la recherche uniquement à partir de 3 lettres
         if (searchLetter.length < 3) {
@@ -230,16 +235,33 @@ export function searchLetter(data, container) {
 
         filterState.searchText = searchLetter;
 
-        // Filtrage des recettes
-        const filteredRecipes = data.filter((recipe) => {
-            const matchesName = recipe.name.toLowerCase().includes(searchLetter);
-            const matchesDescription = recipe.description.toLowerCase().includes(searchLetter);
-            const matchesIngredient = recipe.ingredients.some((ingredient) =>
-                ingredient.ingredient.toLowerCase().includes(searchLetter)
-            );
+        // Filtrage avec boucles natives
+        const filteredRecipes = [];
+        for (let i = 0; i < data.length; i++) {
+            const recipe = data[i];
 
-            return matchesName || matchesDescription || matchesIngredient;
-        });
+            let matchesSearchText = false;
+
+            // Vérifier si le nom ou la description contient le texte recherché
+            if (
+                recipe.name.toLowerCase().includes(searchLetter) ||
+                recipe.description.toLowerCase().includes(searchLetter)
+            ) {
+                matchesSearchText = true;
+            }
+
+            // Vérifier si un des ingrédients contient le texte recherché
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchLetter)) {
+                    matchesSearchText = true;
+                    break; // Arrêter la boucle si une correspondance est trouvée
+                }
+            }
+
+            if (matchesSearchText) {
+                filteredRecipes.push(recipe);
+            }
+        }
 
         // Afficher les recettes filtrées
         displayRecipes(filteredRecipes);
@@ -251,7 +273,7 @@ export function searchLetter(data, container) {
         const message = document.getElementById('no-results-message');
         const matchingCards = document.querySelectorAll('.recipe-card:not([style*="display: none"])');
 
-        if (filteredRecipes.length === 0) {
+        if (!matchingCards.length) {
             if (!message) {
                 const noResultsMessage = document.createElement('p');
                 noResultsMessage.id = 'no-results-message';
