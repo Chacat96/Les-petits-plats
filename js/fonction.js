@@ -23,7 +23,7 @@ export function filter() {
             const filter = button.closest('.filter');
             const filterContent = filter.querySelector('.filter-content');
             const icon = button.querySelector('i');
-            
+
             // Basculer l'affichage et l'icône du filtre
             filter.classList.toggle('active');
             if (filter.classList.contains('active')) {
@@ -39,10 +39,11 @@ export function filter() {
     });
 }
 
+// fonction met à jour la liste des filtres
 export function setupFilterSearch() {
     // Recherche dans les filtres
     const searchInputs = document.querySelectorAll('.search');
-    
+
     searchInputs.forEach(input => {
         input.addEventListener('input', (e) => {
             const searchText = e.target.value.toLowerCase().trim();
@@ -58,7 +59,7 @@ export function setupFilterSearch() {
     });
 }
 
-// Fonction d'affichage
+// Fonction d'affichage des elements dans les filtres
 export function displayFilters(data) {
     // Collecte et affiche les filtres tag
     const ingredientList = document.querySelector('.filter-ingredient .filter-list');
@@ -66,17 +67,17 @@ export function displayFilters(data) {
     const ustensilList = document.querySelector('.filter-ustensiles .filter-list');
 
     // Extraction des données
-    const ingredients = new Set(data.flatMap(recipe => 
+    const ingredients = new Set(data.flatMap(recipe =>
         recipe.ingredients.map(ing => ing.ingredient.toLowerCase())
     ));
     const appliances = new Set(data.map(recipe => recipe.appliance.toLowerCase()));
-    const ustensils = new Set(data.flatMap(recipe => 
+    const ustensils = new Set(data.flatMap(recipe =>
         recipe.ustensils.map(ust => ust.toLowerCase())
     ));
 
     // Fonction pour remplir les listes de filtres
     const appendToList = (list, items) => {
-        list.innerHTML = ''; 
+        list.innerHTML = '';
         [...items].sort().forEach(item => {
             const li = document.createElement('li');
             li.textContent = capitalizeFirstLetter(item);
@@ -96,21 +97,21 @@ export function displayRecipes(recipes) {
     // Afficher les cartes de recettes
     const container = document.getElementById('recipes-container');
     const template = document.getElementById('recipes-template');
-    
+
     container.innerHTML = '';
 
     recipes.forEach(recipe => {
         const recipeElement = template.content.cloneNode(true);
 
         const imgContainer = recipeElement.querySelector('.img-recipe');
-        
+
         // Remplacer l'img simple par un picture
         const currentImg = imgContainer.querySelector('[data-image]');
         const picture = document.createElement('picture');
-        
+
         // Construire les chemins d'images
         const webpPath = `${imagePath}/${recipe.image.replace('.jpg', '.webp')}`;
-        
+
         // Créer la structure picture
         picture.innerHTML = `
             <source srcset="${webpPath}" type="image/webp">
@@ -119,12 +120,12 @@ export function displayRecipes(recipes) {
                  class="recipe-image"
                  loading="lazy">
         `;
-        
+
         // Remplacer l'ancienne image par picture
         currentImg.replaceWith(picture);
-        
+
         // Remplir les données de la recette
-        
+
         recipeElement.querySelector('[data-time]').textContent = `${recipe.time} min`;
         recipeElement.querySelector('[data-title]').textContent = recipe.name;
         recipeElement.querySelector('[data-description]').textContent = recipe.description;
@@ -149,14 +150,14 @@ export function displayRecipes(recipes) {
 // Fonctions de filtrage et de recherche
 export function filterSelect(data) {
     // Gestion de la sélection des filtres
-    const filterContainer = document.querySelector('.selected-filters'); 
+    const filterContainer = document.querySelector('.selected-filters');
 
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('filter-item')) {
             const filterText = e.target.textContent.toLowerCase();
-           const sanitizer = sanitizeInput(filterText);
+            const sanitizer = sanitizeInput(filterText);
             const existingSpan = filterContainer.querySelector(`.selected-span[data-value="${filterText}"]`);
-            
+
             if (!existingSpan) {
                 addSelectedSpan(filterText, filterContainer, data, sanitizer);
 
@@ -167,6 +168,7 @@ export function filterSelect(data) {
     });
 }
 
+//Fonction pour céer le sppan pour les filtres
 function addSelectedSpan(text, container, data) {
     // Créer un span pour le filtre sélectionné
     const span = document.createElement('span');
@@ -188,6 +190,7 @@ function addSelectedSpan(text, container, data) {
     });
 }
 
+//Fonction qui filtre les recettes en fonction des tags
 function updateRecipesBasedOnFilters(data, container) {
     // Filtrer les recettes selon les tags et la recherche
     const activeTags = Array.from(container.querySelectorAll('.selected-span'))
@@ -203,8 +206,8 @@ function updateRecipesBasedOnFilters(data, container) {
         });
 
         const matchesSearchText = recipe.name.toLowerCase().includes(filterState.searchText) ||
-                                   recipe.description.toLowerCase().includes(filterState.searchText) ||
-                                   recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(filterState.searchText));
+            recipe.description.toLowerCase().includes(filterState.searchText) ||
+            recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(filterState.searchText));
 
         return matchesTags && matchesSearchText;
     });
@@ -272,7 +275,7 @@ export function sanitizeInput(input) {
     return tempDiv.innerHTML; // Retourne le contenu sécurisé
 }
 
-
+//Fonction update listes de filtres en fonction des recettes
 function updateFilterLists(recipes) {
     // Référence des listes
     const ingredientList = document.querySelector('.filter-ingredient .filter-list');
@@ -307,6 +310,7 @@ function updateFilterLists(recipes) {
     updateList(ustensilList, ustensils);
 }
 
+// Fonction pour obtenir les recettes filtrées par tag et recherche principal
 function getFilteredRecipes(data) {
     const activeTags = filterState.activeTags;
     const searchText = filterState.searchText;
@@ -320,8 +324,8 @@ function getFilteredRecipes(data) {
         });
 
         const matchesSearchText = recipe.name.toLowerCase().includes(searchText) ||
-                                   recipe.description.toLowerCase().includes(searchText) ||
-                                   recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(searchText));
+            recipe.description.toLowerCase().includes(searchText) ||
+            recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(searchText));
 
         return matchesTags && matchesSearchText;
     });
